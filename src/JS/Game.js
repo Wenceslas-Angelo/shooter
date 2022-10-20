@@ -25,7 +25,7 @@ class Game {
       this.timeToNextRaven = 0;
     }
 
-    this.ravens.forEach((raven) => raven.update());
+    this.ravens.forEach((raven) => raven.update(deltaTime));
 
     this.ravens = this.ravens.filter((raven) => !raven.markedForDeletion);
   }

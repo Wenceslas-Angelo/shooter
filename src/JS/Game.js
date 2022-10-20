@@ -13,7 +13,6 @@ class Game {
     this.keys = {
       upPressed: false,
       downPressed: false,
-      spacePressed: false,
     };
     this.inputHandler();
     this.player = new Player(this);
@@ -35,7 +34,29 @@ class Game {
       this.timeToNextRaven = 0;
     }
 
-    this.ravens.forEach((raven) => raven.update(deltaTime));
+    this.ravens.forEach((raven) => {
+      raven.update(deltaTime);
+
+      const tempRaven = raven;
+      if (Game.checkCollision(this.player, raven)) {
+        tempRaven.markedForDeletion = true;
+      }
+
+      this.player.projectiles.forEach((projectile) => {
+        const tempProjectile = projectile;
+
+        if (Game.checkCollision(projectile, raven)) {
+          tempRaven.lives -= 1;
+          tempProjectile.markedForDeletion = true;
+
+          if (tempRaven.lives <= 0) {
+            tempRaven.markedForDeletion = true;
+
+            this.score += raven.score;
+          }
+        }
+      });
+    });
 
     this.ravens = this.ravens.filter((raven) => !raven.markedForDeletion);
   }
@@ -68,8 +89,25 @@ class Game {
         this.keys.upPressed = false;
       } else if (e.key === 'ArrowDown') {
         this.keys.downPressed = false;
+      } else if (e.key === ' ') {
+        this.player.shoot();
       }
     });
+  }
+
+  /**
+   *
+   * @param {{x:Number, y:Number, width: Number, height: Number}} rect1
+   * @param {{x:Number, y:Number, width: Number, height: Number}} rect2
+   */
+  static checkCollision(rect1, rect2) {
+    const xIsCollide1 = rect1.x < rect2.x + rect2.width;
+    const xIsCollide2 = rect1.x + rect1.width > rect2.x;
+    const xIsCollide = xIsCollide1 && xIsCollide2;
+    const yIsCollide1 = rect1.y < rect2.y + rect2.height;
+    const yIsCollide2 = rect1.height + rect1.y > rect2.y;
+    const yIsCollide = yIsCollide1 && yIsCollide2;
+    return xIsCollide && yIsCollide;
   }
 }
 

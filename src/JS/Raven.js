@@ -23,6 +23,8 @@ class Raven {
     this.maxFrame = 4;
     this.timeSinceFlap = 0;
     this.flapInterval = Math.random() * 50 + 50;
+    this.lives = 5;
+    this.score = 5;
   }
 
   /**

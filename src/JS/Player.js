@@ -81,7 +81,7 @@ class Player {
     );
   }
 
-  shootTop() {
+  shoot() {
     this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
   }
 }

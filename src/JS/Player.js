@@ -20,6 +20,7 @@ class Player {
     this.maxFrame = 37;
     this.image = new Image();
     this.image.src = playerImg;
+    this.lives = 10;
   }
 
   /**

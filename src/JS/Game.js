@@ -17,9 +17,10 @@ class Game {
     this.inputHandler();
     this.player = new Player(this);
     this.ravens = [];
-    this.ravenInterval = 1000;
+    this.ravenInterval = 2000;
     this.timeToNextRaven = 0;
     this.score = 0;
+    this.gameOver = false;
   }
 
   /**
@@ -38,21 +39,32 @@ class Game {
       raven.update(deltaTime);
 
       const tempRaven = raven;
-      if (Game.checkCollision(this.player, raven)) {
+      if (Game.checkCollision(this.player, tempRaven)) {
+        this.player.lives -= 1;
+        if (this.player.lives <= 0) {
+          this.gameOver = true;
+        }
         tempRaven.markedForDeletion = true;
       }
 
       this.player.projectiles.forEach((projectile) => {
         const tempProjectile = projectile;
 
-        if (Game.checkCollision(projectile, raven)) {
+        if (Game.checkCollision(projectile, tempRaven)) {
           tempRaven.lives -= 1;
           tempProjectile.markedForDeletion = true;
 
           if (tempRaven.lives <= 0) {
             tempRaven.markedForDeletion = true;
 
-            this.score += raven.score;
+            this.score += tempRaven.score;
+            if (this.score > 50) {
+              this.ravenInterval = 1000;
+            }
+
+            if (this.score > 100) {
+              this.ravenInterval = 500;
+            }
           }
         }
       });
@@ -67,9 +79,13 @@ class Game {
    */
   draw(ctx) {
     this.player.draw(ctx);
-    ctx.font = '80px sans-serif';
+
+    ctx.font = '50px sans-serif';
     ctx.fillStyle = 'gray';
+    ctx.textAlign = 'start';
     ctx.fillText(`SCORE: ${this.score}`, 50, 75);
+
+    ctx.fillText(`YOUR LIVES: ${this.player.lives}`, this.width - 400, 75);
 
     this.ravens.forEach((raven) => {
       raven.draw(ctx);

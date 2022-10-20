@@ -68,7 +68,9 @@ class Player {
     });
 
     // Draw player
-    ctx.strokeRect(this.x, this.y, this.width, this.height);
+    if (this.game.debug) {
+      ctx.strokeRect(this.x, this.y, this.width, this.height);
+    }
     ctx.drawImage(
       this.image,
       this.frameX * this.width,

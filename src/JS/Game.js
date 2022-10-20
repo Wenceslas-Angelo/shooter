@@ -21,6 +21,7 @@ class Game {
     this.timeToNextRaven = 0;
     this.score = 0;
     this.gameOver = false;
+    this.debug = false;
   }
 
   /**
@@ -98,6 +99,8 @@ class Game {
         this.keys.upPressed = true;
       } else if (e.key === 'ArrowDown') {
         this.keys.downPressed = true;
+      } else if (e.key === 'd') {
+        this.debug = !this.debug;
       }
     });
     window.addEventListener('keyup', (e) => {

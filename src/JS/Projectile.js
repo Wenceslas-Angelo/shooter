@@ -1,3 +1,5 @@
+import projectileImage from '../assets/projectile.png';
+
 class Projectile {
   /**
    *
@@ -9,10 +11,12 @@ class Projectile {
     this.game = game;
     this.x = x;
     this.y = y;
-    this.width = 10;
-    this.height = 3;
+    this.width = 20;
+    this.height = 10;
     this.speed = 2;
     this.markedForDeletion = false;
+    this.image = new Image();
+    this.image.src = projectileImage;
   }
 
   update() {
@@ -25,8 +29,8 @@ class Projectile {
    * @param {CanvasRenderingContext2D} ctx
    */
   draw(ctx) {
-    ctx.fillStyle = 'red';
-    ctx.fillRect(this.x, this.y, this.width, this.height);
+    // ctx.fillStyle = 'red';
+    ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
 

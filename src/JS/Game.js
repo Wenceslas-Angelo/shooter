@@ -10,7 +10,11 @@ class Game {
   constructor(width, height) {
     this.width = width;
     this.height = height;
-    this.keys = [];
+    this.keys = {
+      upPressed: false,
+      downPressed: false,
+      spacePressed: false,
+    };
     this.inputHandler();
     this.player = new Player(this);
     this.ravens = [];
@@ -53,16 +57,17 @@ class Game {
 
   inputHandler() {
     window.addEventListener('keydown', (e) => {
-      const upOrDownIsPressed = e.key === 'ArrowUp' || e.key === 'ArrowDown';
-      if (upOrDownIsPressed && this.keys.indexOf(e.key) === -1) {
-        this.keys.push(e.key);
-      } else if (e.key === ' ') {
-        this.player.shootTop();
+      if (e.key === 'ArrowUp') {
+        this.keys.upPressed = true;
+      } else if (e.key === 'ArrowDown') {
+        this.keys.downPressed = true;
       }
     });
     window.addEventListener('keyup', (e) => {
-      if (this.keys.indexOf(e.key) > -1) {
-        this.keys.splice(this.keys.indexOf(e.key), 1);
+      if (e.key === 'ArrowUp') {
+        this.keys.upPressed = false;
+      } else if (e.key === 'ArrowDown') {
+        this.keys.downPressed = false;
       }
     });
   }

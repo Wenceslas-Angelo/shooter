@@ -12,17 +12,14 @@ class Player {
     this.height = 190;
     this.x = 20;
     this.y = 100;
-    this.speedY = 0;
-    this.maxSpeed = 0.1;
+    this.speed = 0;
+    this.maxSpeed = 5;
     this.projectiles = [];
     this.frameX = 0;
     this.frameY = 0;
     this.maxFrame = 37;
     this.image = new Image();
     this.image.src = playerImg;
-    this.powerUp = false;
-    this.powerUpTimer = 0;
-    this.powerUpLimit = 10000;
   }
 
   /**
@@ -30,14 +27,16 @@ class Player {
    * @param {Number} deltaTime
    */
   update() {
-    if (this.game.keys.includes('ArrowUp')) {
-      this.speedY -= this.maxSpeed;
-    } else if (this.game.keys.includes('ArrowDown')) {
-      this.speedY += this.maxSpeed;
+    // Move player
+    const maxY = this.game.height - this.height;
+    if (this.game.keys.upPressed && this.y >= 0) {
+      this.speed = -this.maxSpeed;
+    } else if (this.game.keys.downPressed && this.y <= maxY) {
+      this.speed = this.maxSpeed;
     } else {
-      this.speedY = 0;
+      this.speed = 0;
     }
-    this.y += this.speedY;
+    this.y += this.speed;
 
     // Update projectiles
     this.projectiles.forEach((projectile) => {

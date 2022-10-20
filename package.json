@@ -1,0 +1,18 @@
+{
+  "name": "shooter",
+  "version": "1.0.0",
+  "description": "shooter game vanilla javascript",
+  "main": "src/index.js",
+  "repository": "https://github.com/Wenceslas-Angelo/shooter.git",
+  "author": "Wenceslas-Angelo <wenceslasangelo@gmail.com>",
+  "license": "MIT",
+  "scripts": {
+    "start": "parcel src/index.html"
+  },
+  "devDependencies": {
+    "eslint": "^7.32.0 || ^8.2.0",
+    "eslint-config-airbnb-base": "^15.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "parcel": "^2.7.0"
+  }
+}

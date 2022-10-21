@@ -21,6 +21,7 @@ class Player {
     this.image = new Image();
     this.image.src = playerImg;
     this.lives = 10;
+    this.shootSound = document.getElementById('shoot');
   }
 
   /**
@@ -85,6 +86,7 @@ class Player {
   }
 
   shoot() {
+    this.shootSound.play();
     this.projectiles.push(new Projectile(this.game, this.x + 80, this.y + 30));
   }
 }

@@ -24,6 +24,7 @@ class Game {
     this.gameOver = false;
     this.debug = false;
     this.explosions = [];
+    this.gameOverSound = document.getElementById('gameOver');
   }
 
   /**
@@ -48,6 +49,7 @@ class Game {
           new Explosion(this, tempRaven.x, tempRaven.y, tempRaven.width),
         );
         if (this.player.lives <= 0) {
+          this.gameOverSound.play();
           this.gameOver = true;
         }
         tempRaven.markedForDeletion = true;

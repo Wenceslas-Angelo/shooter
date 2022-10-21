@@ -1,4 +1,5 @@
 import boomImg from '../assets/boom.png';
+// import boom from '../assets/explosion.wav';
 
 class Explosion {
   /**
@@ -21,6 +22,7 @@ class Explosion {
     this.timeSinceLastFrame = 0;
     this.frameInterval = 200;
     this.markedForDeletion = false;
+    this.sound = document.getElementById('explosion');
   }
 
   /**
@@ -28,6 +30,9 @@ class Explosion {
    * @param {Number} deltaTime
    */
   update(deltaTime) {
+    if (this.frame === 0) {
+      this.sound.play();
+    }
     this.timeSinceLastFrame += deltaTime;
     if (this.timeSinceLastFrame > this.frameInterval) {
       this.frame += 1;

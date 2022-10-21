@@ -1,5 +1,6 @@
 import Raven from './Raven';
 import Player from './Player';
+import Explosion from './Explosion';
 
 class Game {
   /**
@@ -22,6 +23,7 @@ class Game {
     this.score = 0;
     this.gameOver = false;
     this.debug = false;
+    this.explosions = [];
   }
 
   /**
@@ -42,6 +44,9 @@ class Game {
       const tempRaven = raven;
       if (Game.checkCollision(this.player, tempRaven)) {
         this.player.lives -= 1;
+        this.explosions.push(
+          new Explosion(this, tempRaven.x, tempRaven.y, tempRaven.width),
+        );
         if (this.player.lives <= 0) {
           this.gameOver = true;
         }
@@ -57,7 +62,9 @@ class Game {
 
           if (tempRaven.lives <= 0) {
             tempRaven.markedForDeletion = true;
-
+            this.explosions.push(
+              new Explosion(this, tempRaven.x, tempRaven.y, tempRaven.width),
+            );
             this.score += tempRaven.score;
             if (this.score > 50) {
               this.ravenInterval = 1000;
@@ -71,7 +78,12 @@ class Game {
       });
     });
 
+    this.explosions.forEach((explosion) => explosion.update(deltaTime));
+
     this.ravens = this.ravens.filter((raven) => !raven.markedForDeletion);
+    this.explosions = this.explosions.filter(
+      (explosion) => !explosion.markedForDeletion,
+    );
   }
 
   /**
@@ -90,6 +102,10 @@ class Game {
 
     this.ravens.forEach((raven) => {
       raven.draw(ctx);
+    });
+
+    this.explosions.forEach((explosion) => {
+      explosion.draw(ctx);
     });
   }
 

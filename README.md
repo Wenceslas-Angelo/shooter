@@ -1,7 +1,7 @@
 # shooter
 shooter game with javascript
 
-## Available Scripts
+### `git clone https://github.com/Wenceslas-Angelo/shooter.git`
 
 ### `yarn install`
 
